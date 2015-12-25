@@ -1,0 +1,14 @@
+{
+  "name": "neoconsole",
+  "main": "./lib/main.coffee",
+  "version": "0.0.1",
+  "description": "",
+  "repository": "https://github.com/brothertao/neoconsole",
+  "license": "MIT",
+  "engines": {
+    "atom": "*"
+  },
+  "dependencies": {
+    "pty.js": "^0.3.0"
+  }
+}

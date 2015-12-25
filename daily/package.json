@@ -1,0 +1,14 @@
+{
+  "name": "jsps",
+  "version": "0.0.2",
+  "description": "js postscript",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brothertao/jsps.git"
+  },
+  "scripts": {},
+  "devDependencies": {},
+  "dependencies": {
+    "underscore": "^1.8.3"
+  }
+}
