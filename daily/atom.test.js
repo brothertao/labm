@@ -1,23 +1,3 @@
-//window-mode
-var remote = require('remote')
-var bw = remote.require('browser-window')
-var vm = require('vm')
-var fs = require('fs')
-var path = require('path')
-vm.runInThisContext('console.log("hhhh")')
-var focusWindow = bw.getFocusedWindow()
-var windows = bw.getAllWindows()
-function testContext() {
-  var a = 1;
-  b = new w;
-  b.contextInfo();
-}
-function w() {
-  this.bb = 1;
-}
-var d = new Date;
-d.toString()
-var c = {a:1}
 
 Object.keys(d)
 'use strict'

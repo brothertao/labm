@@ -66,4 +66,4 @@ var dict = (word) => {
 var test = () => {
   return true;
 }
-module.exports = { objkeys, grep, msearch, frequire, dict, test }
+module.exports = { objkeys, grep, msearch, frequire, dict, newWindow, test }

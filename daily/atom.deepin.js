@@ -23,3 +23,8 @@ atom.workspace.panelContainers.bottom.panels[0].show()
 atom.workspace.panelContainers.bottom.panels[0].item
 
 //test code
+var u = utils.hrequire('../neoconsole/lib/utils')
+u.btc
+window.utils = u
+utils.btc()
+console.clear()

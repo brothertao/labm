@@ -7,6 +7,7 @@ var bash = () => {
   return {
     send:(msg)=>{my.stdin.write(msg+'\n')},
     p:my,
+    state:my.stdin.writable,
     exit:()=>{my.stdin.write('exit\n');my.stdin.write('exit\n');}
   }
 }

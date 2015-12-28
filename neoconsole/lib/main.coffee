@@ -1,37 +1,44 @@
 path = require('path')
+vm = require('vm')
 utils = require('./utils.js')
 
 module.exports =
   activate: ->
-    @settings = 
-      mode: 'normal-mode'
-      lang: 'js'
+    @state =
+      settings: {}
+      injectFn:null
+    #hack expose point for quikly develop
+    window.neoconsole = @state
 
     atom.commands.add 'atom-workspace',
       'jscode:run': =>
         @run()
+
     window.utils = utils
     window.lodash = require "/Applications/Atom.app/Contents/Resources/app.asar/node_modules/babel-core/node_modules/lodash/index.js"
+
   run: ->
+    inject = utils.frequire(path.join(__dirname, './inject.js'))
+    @state.injectFn = inject @state
+    if @state.injectFn
+      return @state.injectFn()
 
+    code = @getCodePhase @state
+    rst = @executePhase @state, code
+    @renderPhase @state, rst
+
+  getCodePhase: (state)->
     editor = atom.workspace.getActiveTextEditor()
-    return unless editor?
-    pathInfo = path.parse editor.getURI()
-    if pathInfo?.ext?.length > 2
-      @settings.lang = pathInfo.ext.split('.').pop()
-      @settings.name = pathInfo.base
-    
+    code = editor.getSelectedText()
+    if !code.length
+      code = editor.lineTextForBufferRow editor.getCursorBufferPosition().row
+    return code
 
-    scripts = editor.getSelectedText()
-    if scripts.length
-      'run selected'
-    else
-      scripts = editor.lineTextForBufferRow editor.getCursorBufferPosition().row
-    
-    @runScripts(scripts);
-
-  runScripts: (scripts) ->
-    @env = require './'+@settings.lang+'Env.coffee'
-    @env.run(scripts, @settings)
-
-
+  executePhase: (state, code) ->
+    atom.openDevTools()
+    try
+      return vm.runInThisContext code
+    catch e
+      return {code, e}
+  renderPhase: (state, rst) ->
+    console.log(rst)
