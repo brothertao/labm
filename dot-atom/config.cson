@@ -18,4 +18,5 @@
     absoluteMode: true
   "vim-mode":
     useSmartcaseForSearch: true
+    wrapLeftRightMotion: true
   "one-dark-ui": {}

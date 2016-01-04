@@ -4,7 +4,7 @@ unset NODE_PATH
 unset NODE_ENV
 export LANG=zh_CN.UTF-8
 fish
-ls /tmp
+ls /tmp/
 pwd
 cd ~/.atom/packages/term2
 subl .
@@ -44,7 +44,7 @@ echo $_
 env
 vim
 python
-print 'sss'
+printf 'sss\n'
 quit()
 cd /tmp/material/material-ui/examples/webpack-example/build
 ls
@@ -238,3 +238,6 @@ subl ~/.atom/packages/neoconsole
 
 cd /Applications/Visual\ Studio\ Code.app/Contents/Frameworks;ls
 ifconfig en0
+//php interactive
+php -a
+printf "\u6570\u636e\u91cd\u590d"

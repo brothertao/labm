@@ -1,6 +1,7 @@
 //code cookie
 console.clear()
 utils.btc()
+utils.dict('fatigue')
 utils.reload()
 
 //:newwindow:canvas

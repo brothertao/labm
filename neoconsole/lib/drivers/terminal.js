@@ -27,12 +27,15 @@ function getTerminal(state) {
   var terminal = utils.terminal();
   return state.terminal = terminal;
 }
+function initEnv(state) {
+}
 function create(state) {
   if (!matchEnv()) {
     return false;
   }
   return () => {
     //get code text
+    initEnv(state)
     var code = getCode();
     var terminal = getTerminal(state);
     //execute shell command
