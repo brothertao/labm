@@ -153,6 +153,89 @@ var test = () => {
   //noop;;
   return true;
 }
+//get latest line config
+function lineConfig() {
+  var lineID = ':line-config '
+  var editor = atom.workspace.getActiveTextEditor();
+  var lines = editor.getBuffer().lines
+  var tail = editor.getCursorBufferPosition().row;
+  var line = null;
+  while(tail--) {
+    line = lines[tail].trim();
+    index = line.search(lineID)
+    if(index>0&&line.substring(index+lineID.length)!=="'"){
+      break;
+    }
+    line = null;
+  }
+  if (line) {
+    return line.substring(line.search(lineID)+lineID.length)
+  }
+  return '';
+}
+//get global config
+function fileConfig() {
+  const begin = 'file-config-begin'
+  const end = 'file-config-end'
+
+  var lines = atom.workspace.getActiveTextEditor().getBuffer().lines
+  var tail = lines.length;
+  var configLines = [];
+  var line, endLine;
+
+  //fetch config lines
+  --tail
+  while(tail--) {
+    line = lines[tail].trim();
+    if(!endLine && line.search(end)<0){
+      continue;
+    }
+    endLine = tail
+
+    configLines.unshift(line)
+    if(line.search(begin)>0){
+      break;
+    }
+    if(tail===0){
+      configLines = [];
+    }
+  }
+  if (configLines.length===0) {
+    return {name:'default'};
+  }
+
+  //trim comment token
+  var length = configLines.shift().trim().search(begin)
+  configLines.pop()
+  var str = configLines.reduce((acc, line)=>{
+    return acc+'\n'+line.substring(length);
+  }, '')
+  return JSON.parse(str)
+}
+function getConfig() {
+  var f = fileConfig()
+  var l = lineConfig()
+  if (l.length>0) {
+    try {
+      l = JSON.parse(l)
+    } catch (e) {
+      console.log(e)
+      l = {}
+    }
+  } else {
+    l = {}
+  }
+  return Object.assign({}, f, l)
+}
+//get code text
+function getCode() {
+    var editor = atom.workspace.getActiveTextEditor();
+    var code = editor.getSelectedText();
+    if (!code.length) {
+      return editor.lineTextForBufferRow(editor.getCursorBufferPosition().row);
+    }
+    return code;
+}
 
 module.exports = { objkeys
   , reload
@@ -167,5 +250,9 @@ module.exports = { objkeys
   , btc
   , terminal
   , clip
+  , fileConfig
+  , lineConfig
+  , getConfig
+  , getCode
   , test
 }

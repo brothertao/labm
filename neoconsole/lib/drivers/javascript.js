@@ -5,34 +5,8 @@ var remote = require('remote')
 var bw = remote.require('browser-window')
 function matchEnv(state, code) {
   var ftype = atom.workspace.getActiveTextEditor().getGrammar().scopeName;
-  preExecute(state, code)
-  if ('source.js'!==ftype||!state.newwindow) {
+  if ('source.js'!==ftype) {
     return false;
-  }
-  return true;
-}
-function getCode() {
-    var editor = atom.workspace.getActiveTextEditor();
-    var code = editor.getSelectedText();
-    if (!code.length) {
-      return editor.lineTextForBufferRow(editor.getCursorBufferPosition().row);
-    }
-    return code;
-}
-function preExecute(state, code) {
-  var rst = code.match(/^\/\/:(.*)/);
-  if (!rst) {
-    return true;
-  }
-  if ('focus-main'===rst[1]) {
-    state.newwindow = '';
-    return false;
-  }
-  var options = rst[1].split(':');
-  var winName = options[1];
-  if ('newwindow'===options[0] && winName) {
-    state.newwindow = winName;
-    return true;
   }
   return true;
 }
@@ -41,7 +15,8 @@ function send(win, code) {
 }
 
 function getWindow(state) {
-  var name = state.newwindow
+  var config = utils.getConfig()
+  var name = config.name
   if (state.windows&&state.windows[name]&&!state.windows[name].closed) {
     return state.windows[name];
   }
@@ -83,10 +58,15 @@ function getWindow(state) {
 }
 function create(state) {
   //get code text
-  var code = getCode();
+  var code = utils.getCode();
   if (!matchEnv(state, code)) {
     return false;
   }
+  var config = utils.getConfig()
+  if (config.name==='default'||config.name==='main') {
+    return false
+  }
+
   return () => {
     var win = getWindow(state);
     send(win, code);

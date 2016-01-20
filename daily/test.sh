@@ -18,6 +18,17 @@ bash
 ls /tmp
 tailf /tmp/yum.log
 tty
+cd ~
+cd github
+ls |grep atom
+cd atom
+git pull
+git help branch
+\x0d
+
+q
+git branch --list
+subl .
 
 which bash
 id
@@ -240,4 +251,5 @@ cd /Applications/Visual\ Studio\ Code.app/Contents/Frameworks;ls
 ifconfig en0
 //php interactive
 php -a
+\x0a
 printf "\u6570\u636e\u91cd\u590d"

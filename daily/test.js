@@ -1,5 +1,8 @@
 var editor = atom.workspace.getActiveTextEditor()
 editor
+utils.btc()
+utils.lineConfig()
+utils.fileConfig()
 editor.lineTextForScreenRow()
 editor.lineTextForBufferRow()
 var row = editor.getCursorBufferPosition().row
@@ -7,70 +10,51 @@ var buffer = editor.getBuffer()
 while (row--) {
   console.log(buffer.lines[row])
 }
+8897*12
+10000/12
+6463*0.028
+200*600
+4600*12
+//test
+var a = "2015-11-12 00"
+a.substr
+process.versions
+'use strict'
+class iii {
+  constructor() {
+    console.log('sss')
+  }
+}
+var path = require('path')
+path.join('s')
+utils.dict('dedupe')
+new iii()
+delete iii
 
+var test = function(a, b) {
+  console.log('a');
+  console.log(a);
+  console.log('b');
+  console.log(b);
+}
+var t = test.bind(this, 1)
+t()
+//:line-config {"name":"default"}
+utils.reload()
+delete neoconsole.terminals["line-shell"]
 
-//get latest line config
+utils.dict('chakra')
+~1
+~-1
+path.resolve('/tmp/test/test/../texx')
+path.join('/tmp/test/test/../texx', 'nam')
+process.env
+process.platform
 //:line-config  name
-function lineConfig() {
-  var lineID = ':line-config '
-  var editor = atom.workspace.getActiveTextEditor();
-  var lines = editor.getBuffer().lines
-  var tail = editor.getCursorBufferPosition().row;
-  var line = null;
-  while(tail--) {
-    line = lines[tail].trim();
-    index = line.search(lineID)
-    if(index>0&&line.substring(index+lineID.length)!=="'"){
-      break;
-    }
-    line = null;
-  }
-  if (line) {
-    return line.substring(line.search(lineID)+lineID.length)
-  }
-  return '';
-}
-//get global config
-function fileConfig() {
-  const begin = 'file-config-begin'
-  const end = 'file-config-end'
-
-  var lines = atom.workspace.getActiveTextEditor().getBuffer().lines
-  var tail = lines.length;
-  var configLines = [];
-  var line, endLine;
-
-  //fetch config lines
-  --tail
-  while(tail--) {
-    line = lines[tail].trim();
-    if(!endLine && line.search(end)<0){
-      continue;
-    }
-    endLine = tail
-
-    configLines.unshift(line)
-    if(line.search(begin)>0){
-      break;
-    }
-    if(tail===0){
-      configLines = [];
-    }
-  }
-  if (configLines.length===0) {
-    return '';
-  }
-
-  //trim commit token
-  var length = configLines.shift().trim().search(begin)
-  configLines.pop()
-  var str = configLines.reduce((acc, line)=>{
-    return acc+'\n'+line.substring(length);
-  }, '')
-  return JSON.parse(str)
-}
-var c = fileConfig()
-c
+utils.reload()
+utils.fileConfig()
+utils.lineConfig()
+console.clear()
 //file-config-begin
 // {"name": "canvas"}
 //file-config-end

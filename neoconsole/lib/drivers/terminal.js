@@ -6,14 +6,6 @@ function matchEnv() {
   }
   return true;
 }
-function getCode() {
-    var editor = atom.workspace.getActiveTextEditor();
-    var code = editor.getSelectedText();
-    if (!code.length) {
-      return editor.lineTextForBufferRow(editor.getCursorBufferPosition().row);
-    }
-    return code;
-}
 function send(terminal, code) {
   if (code=='\\x03') {
     return terminal.send('\x03');
@@ -21,11 +13,16 @@ function send(terminal, code) {
   return terminal.send(code);
 }
 function getTerminal(state) {
-  if (state.terminal&&state.terminal.ok) {
-    return state.terminal;
+  var config = utils.getConfig()
+  var name = config.name
+  if (!state.terminals) {
+    state.terminals = {}
+  }
+  if (state.terminals[name]&&state.terminals[name].ok) {
+    return state.terminals[name]
   }
   var terminal = utils.terminal();
-  return state.terminal = terminal;
+  return state.terminals[name] = terminal;
 }
 function initEnv(state) {
 }
@@ -36,7 +33,7 @@ function create(state) {
   return () => {
     //get code text
     initEnv(state)
-    var code = getCode();
+    var code = utils.getCode();
     var terminal = getTerminal(state);
     //execute shell command
     send(terminal, code);

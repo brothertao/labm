@@ -1,3 +1,4 @@
+#relay my
 relay my
 exit
 ls -al /home/work/promotion-works
@@ -19,15 +20,21 @@ rm -rf /home/work/promotion-works/views/new
 rm -rf /home/work/promotion-works/views/static/new
 ls -al /home/work/promotion-works/views/static/new/build
 
+#:line-config {"name":"line-shell"}
 tty
 echo $0
 echo $PS1
 tailf public/index.php
 \x03
+#sync backend
 rsync -avh  --exclude views/new a111@172.17.66.33:~/mls/codes/promotion-works /home/work/
+ls
 
 #sync with frontend
 rsync -avh --exclude config --exclude views/static/new/node_modules a111@172.17.66.33:~/mls/codes/promotion-works /home/work/
+#sync build
+rsync -avh --exclude config --exclude views/static/new/node_modules a111@172.17.66.33:~/mls/codes/promotion-works/views/static/new/build /home/work/promotion-works/views/static/new
+rsync -avh --exclude config --exclude views/static/new/node_modules a111@172.17.66.33:~/mls/codes/promotion-works/views/static/new/fonts /home/work/promotion-works/views/static/new
 
 
 rsync -avh a111@172.17.66.33:~/mls/codes/promotion-works/config/web_qa_lab /home/work/promotion-works/config/
@@ -40,7 +47,16 @@ rsync -avh --exclude config a111@172.17.66.33:~/mls/codes/promotion-works /home/
 \x1a
 
 mysql -h10.8.3.34 -P3300 -umlstmpdb -pmlstmpdb123456 acaleph
+SELECT * FROM t_acaleph_act_tpl WHERE 1=1 ORDER BY id DESC LIMIT 0, 50;
+show tables;
+show create table t_acaleph_act_tpl;
+show create table t_acaleph_act_tpl_audit_process;
+
+select id, status from t_acaleph_act_tpl where id=2145;
+update t_acaleph_act_tpl set status=0 where id=2145;
+select * from t_acaleph_act_tpl_audit_process where doc_id=2145;
 delete from t_acaleph_act_tpl where id=489;
+quit;
 fg 3
 bg 9
 jobs
@@ -68,3 +84,7 @@ cat /home/work/webdata/logs/exception.2015112612
 cat /home/work/webdata/logs/lab.php.log
 cat /home/work/promotion/scripts/page/Cron.class.php
 echo >/home/work/webdata/logs/lab.php.log
+
+# file-config-begin
+# {"name":"local-test"}
+# file-config-end
