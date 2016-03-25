@@ -39,7 +39,7 @@ cd ~/.atom/packages/neoconsole
 cd ~/github/brothertao.github.io/;ls
 cd ~/github/redux/examples/real-world/server.js;ls
 git add .
-git commit -a -m '#Add: '
+git commit -a -m '#Add: config function'
 git push origin master
 git status
 exit

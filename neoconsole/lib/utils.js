@@ -66,7 +66,7 @@ function hrequire(name) {
 
     var fs =require('fs')
     if (!fs.existsSync(p)) {
-      return getModulesPath(dirname(fn))
+      return getModulesPath(path.dirname(fn))
     }
     return p;
   }

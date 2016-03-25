@@ -15,14 +15,3 @@ sudo dtrace -s /tmp/hl.d
 tty
 ps -ef|grep bash
 \x03
-\x1a
-tail -f /tmp/hl.d
-stty nl
-stty echo
-stty dec
-stty brkint
-stty isig
-stty flsh
-stty sane
-stty raw
-fg
